@@ -88,9 +88,11 @@ void opcontrol() {
 		                 (pros::lcd::read_buttons() & LCD_BTN_CENTER) >> 1,
 		                 (pros::lcd::read_buttons() & LCD_BTN_RIGHT) >> 0);
 
-		int power = master.get_analog(ANALOG_LEFT_Y);
-		int turn = master.get_analog(ANALOG_LEFT_X);
+		int power = master.get_analog(ANALOG_LEFT_X);
+		int turn = master.get_analog(ANALOG_LEFT_Y);
 		int suck_power = master.get_analog(ANALOG_RIGHT_Y);
+
+		// pros::lcd::set_text(2, to_string( suck_power ) );
 
 		int left = power + turn;
 		int right = power - turn;
@@ -99,6 +101,9 @@ void opcontrol() {
 		left_mtr2.move( left );
 		right_mtr1.move( right );
 		right_mtr2.move( right );
+
+		right_suck.move( suck_power*-1 );
+		left_suck.move( suck_power );
 
 		// if (master.get_digital(DIGITAL_R1) ) {
     //   right_suck.move_velocity(100); // This is 100 because it's a 100rpm motor
