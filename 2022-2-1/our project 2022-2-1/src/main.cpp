@@ -78,12 +78,12 @@ void autonomous() {}
  */
 void opcontrol() {
 	pros::Controller master(pros::E_CONTROLLER_MASTER);
-	pros::Motor left_mtr2(16);
-	pros::Motor right_mtr2(14);
-	pros::Motor left_mtr1(18);
-	pros::Motor right_mtr1(12);
-	pros::Motor right_suck(11);
-	pros::Motor left_suck(20);
+	pros::Motor left_mtr2( 16 );
+	pros::Motor right_mtr2( 14 ); // TODO : check if the problem is the reverse
+	pros::Motor left_mtr1( 18 );
+	pros::Motor right_mtr1( 12 );
+	pros::Motor right_suck( 11, true );
+	pros::Motor left_suck( 20 );
 
 	while (true) {
 
@@ -96,18 +96,26 @@ void opcontrol() {
 		int suck_power = master.get_analog(ANALOG_RIGHT_Y);
 		
 		pros::lcd::print(2, "power :%d, turn : %d", power, turn );
-		pros::lcd::print(2, "left :%d, right : %d", left, right );
+		pros::lcd::print(3, "left :%d, right : %d", left, right );
 
 		int left = power + turn;
 		int right = power - turn;
 
-		left_mtr1.move( left );
-		left_mtr2.move( left );
-		right_mtr1.move( right );
-		right_mtr2.move( right );
-
-		right_suck.move( suck_power*-1 );
-		left_suck.move( suck_power );
+		left_mtr1.move_velocity( left );
+		left_mtr2.move_velocity( left );
+		right_mtr1.move_velocity( right );
+		right_mtr2.move_velocity( right );
+		
+		if ( suck_power != 0 )
+		{
+			right_suck.move_velocity( suck_power );
+			left_suck.move_velocity( suck_power );
+		}
+		else
+		{
+			right_suck.brake();
+			left_suck.brake();
+		}
 
 		pros::delay(2);
 	}
