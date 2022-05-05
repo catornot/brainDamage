@@ -1,7 +1,7 @@
 {
     "py/object": "pros.conductor.project.Project",
     "py/state": {
-        "project_name": "My PROS Project",
+        "project_name": "CubeCrash_BrainDamage",
         "target": "v5",
         "templates": {
             "kernel": {

@@ -6,15 +6,15 @@
  * When this callback is fired, it will toggle line 2 of the LCD text between
  * "I was pressed!" and nothing.
  */
-void on_center_button() {
-	static bool pressed = false;
-	pressed = !pressed;
-	if (pressed) {
-		pros::lcd::set_text(2, "I was pressed!");
-	} else {
-		pros::lcd::clear_line(2);
-	}
-}
+// void on_center_button() {
+// 	static bool pressed = false;
+// 	pressed = !pressed;
+// 	if (pressed) {
+// 		pros::lcd::set_text(2, "I was pressed!");
+// 	} else {
+// 		pros::lcd::clear_line(2);
+// 	}
+// }
 
 /**
  * Runs initialization code. This occurs as soon as the program is started.
@@ -25,8 +25,11 @@ void on_center_button() {
 void initialize() {
 	pros::lcd::initialize();
 	pros::lcd::set_text(1, "Hello World");
+	pros::lcd::set_text(4, " \\ / ");
+	pros::lcd::set_text(5, "  O O ");
+	pros::lcd::set_text(6, "  [_] ");
 
-	pros::lcd::register_btn1_cb(on_center_button);
+	// pros::lcd::register_btn1_cb(on_center_button);
 }
 
 /**
@@ -91,8 +94,9 @@ void opcontrol() {
 		int power = master.get_analog(ANALOG_LEFT_X);
 		int turn = master.get_analog(ANALOG_LEFT_Y);
 		int suck_power = master.get_analog(ANALOG_RIGHT_Y);
-
-		// pros::lcd::set_text(2, to_string( suck_power ) );
+		
+		pros::lcd::print(2, "power :%d, turn : %d", power, turn );
+		pros::lcd::print(2, "left :%d, right : %d", left, right );
 
 		int left = power + turn;
 		int right = power - turn;
@@ -104,16 +108,6 @@ void opcontrol() {
 
 		right_suck.move( suck_power*-1 );
 		left_suck.move( suck_power );
-
-		// if (master.get_digital(DIGITAL_R1) ) {
-    //   right_suck.move_velocity(100); // This is 100 because it's a 100rpm motor
-    // }
-    // else if (master.get_digital(DIGITAL_R2)) {
-    //   arm.move_velocity(-100);
-    // }
-    // else {
-    //   arm.move_velocity(0);
-    // }
 
 		pros::delay(2);
 	}
