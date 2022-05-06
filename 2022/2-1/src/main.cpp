@@ -25,9 +25,9 @@
 void initialize() {
 	pros::lcd::initialize();
 	pros::lcd::set_text(1, "Hello World");
-	pros::lcd::set_text(4, " \\ / ");
-	pros::lcd::set_text(5, "  O O ");
-	pros::lcd::set_text(6, "  [_] ");
+	pros::lcd::set_text(4, "| |\\  _  /| |");
+	pros::lcd::set_text(5, "|_| \\/\\/ |_|");
+	pros::lcd::set_text(6, "");
 
 	// pros::lcd::register_btn1_cb(on_center_button);
 }
