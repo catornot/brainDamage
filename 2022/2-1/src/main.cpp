@@ -31,15 +31,17 @@ void autonomous()
 		std::shared_ptr<ChassisController> chassis = ChassisControllerBuilder()
 			.withMotors( { 16, 18 },
 					{ 12, 7 } )
-			.withDimensions( AbstractMotor::gearset::green, { { 4_in, 11.5_in }, imev5GreenTPR } )
+			.withDimensions( AbstractMotor::gearset::green, { { 4_in, 17.1_in }, imev5GreenTPR } ) // 11.1, 17.1, 15
 			.build();
 
-		chassis -> SetMaxVelocity( 100 );
-		chassis -> moveDistance( 1_in );
+		// chassis -> SetMaxVelocity( 100 );
+		chassis -> moveDistance( 10_in );
 		chassis -> waitUntilSettled();
 
-		chassis -> SetMaxVelocity( 100 );
-		chassis -> turnAngle( 360_deg );
+		pros::delay( 100 );
+
+		// chassis -> SetMaxVelocity( 100 );
+		chassis -> turnAngle( 1440_deg );
 }
 
 void opcontrol() {
