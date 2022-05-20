@@ -27,25 +27,40 @@ void autonomous()
 		// pros::Motor right_mtr2( 12 );
 		pros::Motor right_suck( 11, true );
 		pros::Motor left_suck( 20 );
-	
-		ChassisScales scales( { 4_in, 17.1_in }, imev5GreenTPR ); // 11.1, 17.1, 15 so this wheel, wheel tract which should be 17.1 thought 17.1 is not the right value and should be remesured https://okapilib.github.io/OkapiLib/classokapi_1_1ChassisScales.html
 
-		std::shared_ptr<ChassisController> chassis = ChassisControllerBuilder();
-		chassis = chassis.withMotors( { 16, 18 }, { 12, 7 } ); // this returns the new chassis back so it should work
-		chassis = chassis.withDimensions( AbstractMotor::gearset::green, scales ); // if moving scales doesn't work revert to passed methode ( moved to remove the clutter )
-		chassis = chassis.build();
+		ChassisScales scales( { 4_in, 15.5_in }, imev5GreenTPR ); // 11.1, 17.1, 15 so this wheel, wheel tract which should be 17.1 thought 17.1 is not the right value and should be remesured https://okapilib.github.io/OkapiLib/classokapi_1_1ChassisScales.html
 
-		chassis -> setMaxVelocity( 100 ); // this should exist
-		chassis -> moveDistance( 10_in );
-		chassis -> waitUntilSettled(); // same for this maybe I could use IsSettled(); with a while loop like smth like this
-		// while( !chassis -> isSettled() ) 
+		std::shared_ptr<ChassisController> chassis = ChassisControllerBuilder()
+				.withMotors( { 16, 18 }, { 12, 7 } ) // this returns the new chassis back so it should work
+				.withDimensions( AbstractMotor::gearset::green, scales ) // if moving scales doesn't work revert to passed methode ( moved to remove the clutter )
+				.build();
+
+		// pros::delay( 50 );
+		// while( !chassis -> isSettled() )
 		// {
-		//	pros::delay( 2 );
+		// 	pros::delay( 2 );
 		// }
 		// if waitUntilSettled doesn't work try this ^
+		// chassis -> turnAngle( 0_deg );
+		// chassis -> waitUntilSettled();
 
-		chassis -> setMaxVelocity( 100 );
-		chassis -> turnAngle( 1440_deg );
+		chassis -> setMaxVelocity( 50 ); // this should exist
+		chassis -> moveDistance( 10_in );
+		chassis -> waitUntilSettled(); // same for this maybe I could use IsSettled(); with a while loop like smth like this
+
+		for( int x = 0; x < 3; x++ )
+		{
+				chassis -> turnAngleAsync( 90_deg );
+				chassis -> waitUntilSettled();
+
+				chassis -> moveDistance( 10_in );
+				chassis -> waitUntilSettled();
+		}
+		// chassis -> turnAngle( 90_deg );
+		// chassis -> waitUntilSettled();
+		//
+		// chassis -> moveDistance( 10_in );
+		// chassis -> waitUntilSettled();
 }
 
 void opcontrol() {
