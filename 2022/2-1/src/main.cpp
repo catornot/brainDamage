@@ -38,11 +38,11 @@ void autonomous()
 		// chassis -> waitUntilSettled(); // same for this maybe I could use IsSettled(); with a while loop like smth like this
 
 			// should clean up the formating
-			right_suck.move_velocity( 100 )
-			left_suck.move_velocity( 100 )
+		right_suck.move_velocity( 100 );
+		left_suck.move_velocity( 100 );
 
-				chassis -> turnAngleAsync( 0_deg );
-				chassis -> waitUntilSettled();
+		chassis -> turnAngleAsync( 0_deg );
+		chassis -> waitUntilSettled();
 
 		for( int x = 0; x < 4; x++ )
 		{
@@ -54,8 +54,8 @@ void autonomous()
 				chassis -> waitUntilSettled();
 
 		}
-		right_suck.move_velocity( 0 )
-		left_suck.move_velocity( 0 )
+		right_suck.move_velocity(  0 );
+		left_suck.move_velocity( 0 );
 }
 
 void opcontrol() {
